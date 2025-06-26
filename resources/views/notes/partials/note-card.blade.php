@@ -19,37 +19,84 @@
             </form>
         </div>
 
-        <!-- Content area (hidden by default) -->
+        <!-- Only the content part will be toggled -->
         <div class="note-content hidden">
             <p class="text-gray-700 mb-4 whitespace-pre-wrap break-words">{{ $note->content }}</p>
+        </div>
 
-            <div class="flex justify-between items-center text-sm text-gray-500">
-                <span>{{ $note->updated_at->diffForHumans() }}</span>
-                <div class="flex space-x-2">
-                    <!-- Edit Button -->
-                    <button onclick="openEditModal({{ $note->id }})"
-                        class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-edit"></i>
+        <!-- These buttons remain always visible -->
+        <div class="flex justify-between items-center text-sm text-gray-500">
+            <span>{{ $note->updated_at->diffForHumans() }}</span>
+            <div class="flex space-x-2">
+                <!-- Edit Button -->
+                <button onclick="openEditModal('editModal{{ $note->id }}')"
+                    class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-edit"></i>
+                </button>
+
+                <!-- Delete Button -->
+                <form action="{{ route('notes.destroy', $note) }}" method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this note?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-trash"></i>
                     </button>
-
-                    <!-- Delete Button -->
-                    <form action="{{ route('notes.destroy', $note) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this note?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Edit Modal for this specific note -->
+<div id="editModal{{ $note->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold">Edit Note</h3>
+            <button onclick="closeEditModal('editModal{{ $note->id }}')" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <form action="{{ route('notes.update', $note) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="mb-4">
+                <input type="text" name="title" value="{{ $note->title }}" required
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <textarea name="content" rows="5" required
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">{{ $note->content }}</textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Color</label>
+                <div class="flex items-center">
+                    @foreach(['#ffffff', '#ffdddd', '#ddffdd', '#ddddff', '#ffffdd'] as $color)
+                    <label class="color-option {{ $note->color == $color ? 'selected' : '' }}"
+                        style="background-color: {{ $color }};">
+                        <input type="radio" name="color" value="{{ $color }}"
+                            {{ $note->color == $color ? 'checked' : '' }} class="hidden">
+                    </label>
+                    @endforeach
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" onclick="closeEditModal('editModal{{ $note->id }}')"
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function toggleNotePreview(button) {
-        // Only toggle the content for the clicked card
         const noteCard = button.closest('.note-card');
         const content = noteCard.querySelector('.note-content');
         const previewText = button.querySelector('.preview-text');
@@ -59,6 +106,16 @@
         previewText.classList.toggle('hidden');
         fullText.classList.toggle('hidden');
     }
+
+    function openEditModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+
+    function closeEditModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
 </script>
 
 <style>
@@ -67,6 +124,21 @@
     }
 
     .note-content {
+        margin-bottom: 1rem;
         transition: all 0.3s ease;
+    }
+
+    .color-option {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .color-option.selected {
+        border-color: #333;
     }
 </style>
