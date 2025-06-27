@@ -1,3 +1,101 @@
+<style>
+    .hidden {
+        display: none;
+    }
+
+    .note-card {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 1.5px 6px rgba(0, 0, 0, 0.03);
+        transition: box-shadow 0.3s, transform 0.3s, max-height 0.3s, padding 0.3s;
+        max-height: 120px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        padding: 0;
+        position: relative;
+    }
+
+    .note-card:hover {
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13), 0 3px 12px rgba(0, 0, 0, 0.07);
+        transform: translateY(-2px) scale(1.01);
+    }
+
+    .note-card.expanded {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        transform: scale(1.03);
+        max-height: 900px;
+        padding-bottom: 1rem;
+        z-index: 10;
+        overflow: visible;
+    }
+
+    .note-content {
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .color-option {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border 0.2s;
+    }
+
+    .color-option.selected {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px #93c5fd;
+    }
+
+    /* Button styles */
+    .note-card button,
+    .note-card form button {
+        outline: none;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .note-card .text-blue-600:hover,
+    .note-card .text-blue-600:focus {
+        color: #2563eb;
+    }
+
+    .note-card .text-red-600:hover,
+    .note-card .text-red-600:focus {
+        color: #dc2626;
+    }
+
+    /* Responsive padding for card content */
+    .note-card .p-6 {
+        padding: 1.5rem;
+    }
+
+    .preview-toggle-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .preview-toggle-btn:hover {
+        background: #e0edff;
+    }
+
+    .chevron-icon {
+        color: #2563eb;
+        transform: rotate(0deg);
+    }
+
+    .note-card.expanded .chevron-icon {
+        transform: rotate(180deg);
+    }
+</style>
 <div class="note-card bg-white rounded-lg shadow overflow-hidden fade-in" style="background-color: {{ $note->color }};">
     <div class="p-6">
         <div class="flex justify-between items-start mb-2">
@@ -115,102 +213,3 @@
         document.body.style.overflow = ''; // Restore scrolling
     }
 </script>
-
-<style>
-    .hidden {
-        display: none;
-    }
-
-    .note-card {
-        background: #fff;
-        border-radius: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 1.5px 6px rgba(0, 0, 0, 0.03);
-        transition: box-shadow 0.3s, transform 0.3s, max-height 0.3s, padding 0.3s;
-        max-height: 120px;
-        overflow: hidden;
-        margin-bottom: 1.5rem;
-        padding: 0;
-        position: relative;
-    }
-
-    .note-card:hover {
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13), 0 3px 12px rgba(0, 0, 0, 0.07);
-        transform: translateY(-2px) scale(1.01);
-    }
-
-    .note-card.expanded {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-        transform: scale(1.03);
-        max-height: 900px;
-        padding-bottom: 1rem;
-        z-index: 10;
-        overflow: visible;
-    }
-
-    .note-content {
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .color-option {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 5px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: border 0.2s;
-    }
-
-    .color-option.selected {
-        border-color: #2563eb;
-        box-shadow: 0 0 0 2px #93c5fd;
-    }
-
-    /* Button styles */
-    .note-card button,
-    .note-card form button {
-        outline: none;
-        border: none;
-        background: none;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-
-    .note-card .text-blue-600:hover,
-    .note-card .text-blue-600:focus {
-        color: #2563eb;
-    }
-
-    .note-card .text-red-600:hover,
-    .note-card .text-red-600:focus {
-        color: #dc2626;
-    }
-
-    /* Responsive padding for card content */
-    .note-card .p-6 {
-        padding: 1.5rem;
-    }
-
-    .preview-toggle-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 0;
-    }
-
-    .preview-toggle-btn:hover {
-        background: #e0edff;
-    }
-
-    .chevron-icon {
-        color: #2563eb;
-        transform: rotate(0deg);
-    }
-
-    .note-card.expanded .chevron-icon {
-        transform: rotate(180deg);
-    }
-</style>

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="mb-8">
     <h1 class="text-3xl font-bold mb-6 text-blue-700 ">QuickNotes</h1>
@@ -7,15 +6,15 @@
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <form action="{{ route('notes.index') }}" method="GET" class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-[200px]">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <label for="search" class="block text-sm font-medium text-gray-500 mb-1">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search notes...">
             </div>
 
             <div class="">
-                <label for="color" class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                <label for="color" class="block text-sm font-medium text-gray-500 mb-1">Color</label>
                 <select name="color" id="color" class="px-8 py-2  border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="" class="">colors</option>
+                    <option value="" >colors</option>
                     <option value="#ffffff" {{ request('color') == '#ffffff' ? 'selected' : '' }}>White</option>
                     <option value="#ffdddd" {{ request('color') == '#ffdddd' ? 'selected' : '' }}>Red</option>
                     <option value="#ddffdd" {{ request('color') == '#ddffdd' ? 'selected' : '' }}>Green</option>
@@ -25,7 +24,7 @@
             </div>
 
             <div>
-                <label for="sort" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                <label for="sort" class="block text-sm font-medium text-gray-500 mb-1">Sort By</label>
                 <select name="sort" id="sort" class="px-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Newest First</option>
                     <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
