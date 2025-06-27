@@ -161,5 +161,17 @@
     clearButton.addEventListener('click', clearDraft);
     form.querySelector('button[type="submit"]').insertAdjacentElement('afterend', clearButton);
 </script>
-
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 1800,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
 @endsection

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +11,28 @@
         .fade-in {
             animation: fadeIn 0.3s ease-in;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .note-card {
             transition: all 0.3s ease;
         }
+
         .note-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
         .color-option {
             width: 25px;
             height: 25px;
@@ -30,14 +42,16 @@
             cursor: pointer;
             border: 2px solid transparent;
         }
+
         .color-option.selected {
             border-color: #333;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     @include('layouts.navigation')
-    
+
     <main class="container mx-auto py-8 px-4">
         @yield('content')
     </main>
@@ -57,7 +71,7 @@
                     document.getElementById('loading').classList.remove('hidden');
                 });
             });
-            
+
             // Animation for alerts
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(alert => {
@@ -68,5 +82,7 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>
