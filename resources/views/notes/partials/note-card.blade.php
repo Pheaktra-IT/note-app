@@ -5,9 +5,11 @@
             <div class="flex items-center space-x-2">
                 <h3 class="text-xl font-semibold break-words">{{ $note->title }}</h3>
                 <button type="button" onclick="toggleNotePreview(this)"
-                    class="text-gray-500 hover:text-blue-500 text-sm">
-                    <span class="preview-text">Show preview</span>
-                    <span class="full-text hidden">Hide preview</span>
+                    class="preview-toggle-btn flex items-center justify-center w-8 h-8 rounded-full transition hover:bg-blue-50">
+                    <svg class="chevron-icon transition-transform duration-200" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+                    </svg>
                 </button>
             </div>
 
@@ -99,13 +101,8 @@
     function toggleNotePreview(button) {
         const noteCard = button.closest('.note-card');
         const content = noteCard.querySelector('.note-content');
-        const previewText = button.querySelector('.preview-text');
-        const fullText = button.querySelector('.full-text');
-
         content.classList.toggle('hidden');
-        previewText.classList.toggle('hidden');
-        fullText.classList.toggle('hidden');
-        noteCard.classList.toggle('expanded'); // Add or remove the expanded class
+        noteCard.classList.toggle('expanded');
     }
 
     function openEditModal(modalId) {
@@ -124,6 +121,32 @@
         display: none;
     }
 
+    .note-card {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 1.5px 6px rgba(0, 0, 0, 0.03);
+        transition: box-shadow 0.3s, transform 0.3s, max-height 0.3s, padding 0.3s;
+        max-height: 120px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        padding: 0;
+        position: relative;
+    }
+
+    .note-card:hover {
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13), 0 3px 12px rgba(0, 0, 0, 0.07);
+        transform: translateY(-2px) scale(1.01);
+    }
+
+    .note-card.expanded {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        transform: scale(1.03);
+        max-height: 900px;
+        padding-bottom: 1rem;
+        z-index: 10;
+        overflow: visible;
+    }
+
     .note-content {
         margin-bottom: 1rem;
         transition: all 0.3s ease;
@@ -137,23 +160,57 @@
         margin-right: 5px;
         cursor: pointer;
         border: 2px solid transparent;
+        transition: border 0.2s;
     }
 
     .color-option.selected {
-        border-color: #333;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px #93c5fd;
     }
 
-    .note-card {
-        transition: box-shadow 0.3s, transform 0.3s, max-height 0.3s;
-        max-height: 100px;
-        overflow: hidden;
+    /* Button styles */
+    .note-card button,
+    .note-card form button {
+        outline: none;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: color 0.2s;
     }
 
-    .note-card.expanded {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-        transform: scale(1.03);
-        max-height: 800px;
-        /* or a value that fits your content */
-        z-index: 10;
+    .note-card .text-blue-600:hover,
+    .note-card .text-blue-600:focus {
+        color: #2563eb;
+    }
+
+    .note-card .text-red-600:hover,
+    .note-card .text-red-600:focus {
+        color: #dc2626;
+    }
+
+    /* Responsive padding for card content */
+    .note-card .p-6 {
+        padding: 1.5rem;
+    }
+
+    .preview-toggle-btn {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .preview-toggle-btn:hover {
+        background: #e0edff;
+    }
+
+    .chevron-icon {
+        color: #2563eb;
+        transform: rotate(0deg);
+    }
+
+    .note-card.expanded .chevron-icon {
+        transform: rotate(180deg);
     }
 </style>

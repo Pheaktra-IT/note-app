@@ -30,7 +30,7 @@ class NoteController extends Controller
         }
 
         // Filter by color
-        if ($request->has('color')) {
+        if ($request->filled('color')) { // <-- use filled() instead of has()
             $query->where('color', $request->color);
         }
 
