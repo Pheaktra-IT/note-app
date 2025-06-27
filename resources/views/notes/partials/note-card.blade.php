@@ -97,8 +97,8 @@
     }
 </style>
 <div class="note-card bg-white rounded-lg shadow overflow-hidden fade-in" style="background-color: {{ $note->color }};">
-    <div class="p-6">
-        <div class="flex justify-between items-start mb-2">
+    <div class="p-5">
+        <div class="flex justify-between items-center mb-2">
             <!-- Title with toggle button -->
             <div class="flex items-center space-x-2">
                 <h3 class="text-xl font-semibold break-words">{{ $note->title }}</h3>
