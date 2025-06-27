@@ -6,12 +6,16 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // <-- Add this line
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller; // <-- Make sure you import this
 
 class NoteController extends Controller
 {
     use AuthorizesRequests; // <-- Add this line
-
+    public function __construct()
+    {
+        $this->middleware('auth'); // This ensures all methods require authentication
+    }
     public function index(Request $request)
     {
         // Get the authenticated user's notes

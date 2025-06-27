@@ -105,6 +105,7 @@
         content.classList.toggle('hidden');
         previewText.classList.toggle('hidden');
         fullText.classList.toggle('hidden');
+        noteCard.classList.toggle('expanded'); // Add or remove the expanded class
     }
 
     function openEditModal(modalId) {
@@ -140,5 +141,19 @@
 
     .color-option.selected {
         border-color: #333;
+    }
+
+    .note-card {
+        transition: box-shadow 0.3s, transform 0.3s, max-height 0.3s;
+        max-height: 100px;
+        overflow: hidden;
+    }
+
+    .note-card.expanded {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        transform: scale(1.03);
+        max-height: 800px;
+        /* or a value that fits your content */
+        z-index: 10;
     }
 </style>
